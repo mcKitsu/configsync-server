@@ -113,7 +113,7 @@ public class CommandLine extends Terminal {
      */
 
     @Setter
-    public class Event extends EventHandler {
+    public static class Event extends EventHandler {
         private Consumer<Terminal> onStart;
         private Consumer<Terminal> onLoad;
         private Consumer<Terminal> onStop;
