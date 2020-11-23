@@ -35,6 +35,12 @@ public class TerminalServer extends RemoteShellServer {
         return null;
     }
 
+    @Override
+    protected boolean onVerifyToken(byte[] token) {
+        this.getLogger().info("Token is " + new String(token));
+        return true;
+    }
+
     /* **************************************************************************************
      *  Public method
      */

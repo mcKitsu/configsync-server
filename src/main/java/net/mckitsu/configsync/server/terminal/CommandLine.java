@@ -5,12 +5,15 @@ import net.mckitsu.configsync.server.terminal.commands.*;
 import net.mckitsu.lib.terminal.Terminal;
 import net.mckitsu.lib.util.EventHandler;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.function.Consumer;
 
 public class CommandLine extends Terminal {
     public final Event event = new Event();
-    public final Scanner scanner = new Scanner(System.in);
+    private BufferedReader input;
+    private boolean stopRead = false;
 
     /* **************************************************************************************
      *  Abstract method
@@ -27,7 +30,9 @@ public class CommandLine extends Terminal {
      *  Override method
      */
     @Override
-    protected boolean onStart() {
+    protected void onStart() {
+        this.stopRead = false;
+        this.input = new BufferedReader(new InputStreamReader(System.in));
         this.getLogger().info("Service starting...");
         this.event.onStart(this);
         this.getLogger().info("Service loading...");
@@ -35,12 +40,24 @@ public class CommandLine extends Terminal {
         this.getLogger().info("Service loaded!");
         this.getLogger().info("Service start finish!");
         this.event.onFinish(this);
-        return false;
     }
 
     @Override
     protected String onRead() {
-        return scanner.nextLine();
+        try {
+            while(!this.stopRead){
+                if(this.input.ready())
+                    return this.input.readLine();
+
+                synchronized (this){
+                    this.wait(100);
+                }
+            }
+        } catch (IOException | InterruptedException e) {
+            System.out.println(e);
+        }
+
+        return "";
     }
 
     @Override
@@ -51,7 +68,13 @@ public class CommandLine extends Terminal {
     @Override
     public void stop(){
         super.stop();
-        event.onStop(this);
+        this.stopRead = true;
+        synchronized (this){
+            this.notify();
+        }
+        this.getLogger().info("Service stopping...");
+        this.event.onStop(this);
+        this.getLogger().info("Service stopped!");
     }
 
     /* **************************************************************************************
@@ -82,9 +105,7 @@ public class CommandLine extends Terminal {
     }
 
     private void onStop(Terminal terminal){
-        this.getLogger().info("Service stopping...");
         this.stop();
-        this.getLogger().info("Service stopped!");
     }
 
     /* **************************************************************************************
