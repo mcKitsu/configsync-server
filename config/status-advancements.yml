@@ -1,0 +1,15 @@
+sql: status
+tableName: advancements
+table:
+    adventure: TEXT
+    adventureFinish: INT
+    end: TEXT
+    endFinish: INT
+    husbandry: TEXT
+    husbandryFinish: INT
+    nether: TEXT
+    netherFinish: INT
+    recipes: TEXT
+    recipesFinish: INT
+    story: TEXT
+    storyFinish: INT

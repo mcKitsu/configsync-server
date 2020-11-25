@@ -1,0 +1,6 @@
+sql: status
+tableName: info
+table:
+    firstPlayed: INT
+    lastPlayed: INT
+    lastKnownName: CHAR(16)

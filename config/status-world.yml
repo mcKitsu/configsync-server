@@ -1,0 +1,13 @@
+sql: status
+tableName: extend-world-survive-0
+table:
+    flying: INT
+    mayfly: INT
+    motionX: REAL
+    motionY: REAL
+    motionZ: REAL
+    posX: REAL
+    posY: REAL
+    posZ: REAL
+    rotationHorizontal: REAL
+    rotationVertical: REAL

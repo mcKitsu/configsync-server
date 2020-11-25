@@ -1,0 +1,11 @@
+sql: status
+tableName: status
+table:
+    Health: INT
+    Fire: INT
+    FoodLevel: INT
+    FoodExhaustionLevel: REAL
+    FoodSaturationLevel : INT
+    XpLevel : INT
+    XpP: REAL
+    PlayerGameType: INT

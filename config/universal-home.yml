@@ -1,0 +1,5 @@
+sql: universal
+tableName: home
+table:
+    max: INT
+    home: TEXT

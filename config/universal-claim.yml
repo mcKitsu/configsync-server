@@ -1,0 +1,9 @@
+sql: universal
+tableName: claim
+table:
+    basic: INT
+    time: INT
+    advancements: INT
+    task: INT
+    shop: INT
+    claim: TEXT

@@ -1,0 +1,5 @@
+sql: data
+tableName: inventory
+table:
+    Inventory: TEXT
+    EnderItems: TEXT

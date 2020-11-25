@@ -1,0 +1,4 @@
+sql: data
+tableName: recipeBook
+table:
+    EnderItems: TEXT

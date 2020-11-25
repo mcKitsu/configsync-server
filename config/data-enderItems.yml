@@ -1,0 +1,4 @@
+sql: data
+tableName: enderItems
+table:
+    EnderItems: TEXT
