@@ -1,6 +1,9 @@
 sql: status
 tableName: advancements
+primaryKey: uuid
 table:
+    uuid: CHAR(36) NOT NULL
+    writeTime: INT NOT NULL
     adventure: TEXT
     adventureFinish: INT
     end: TEXT

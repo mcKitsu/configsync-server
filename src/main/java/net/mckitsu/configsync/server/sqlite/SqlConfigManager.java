@@ -1,7 +1,6 @@
 package net.mckitsu.configsync.server.sqlite;
 
 import lombok.Getter;
-import net.mckitsu.configsync.server.sqlite.yaml.SqlConfig;
 import net.mckitsu.lib.file.FileManager;
 import net.mckitsu.lib.file.FolderManager;
 import net.mckitsu.lib.file.YamlManager;

@@ -1,5 +1,8 @@
 sql: data
 tableName: inventory
+primaryKey: uuid
 table:
+    uuid: CHAR(36) NOT NULL
+    writeTime: INT NOT NULL
     Inventory: TEXT
     EnderItems: TEXT

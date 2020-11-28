@@ -1,4 +1,7 @@
 sql: data
 tableName: recipeBook
+primaryKey: uuid
 table:
+    uuid: CHAR(36) NOT NULL
+    writeTime: INT NOT NULL
     EnderItems: TEXT

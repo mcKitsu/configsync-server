@@ -1,6 +1,9 @@
 sql: universal
 tableName: claim
+primaryKey: uuid
 table:
+    uuid: CHAR(36) NOT NULL
+    writeTime: INT NOT NULL
     basic: INT
     time: INT
     advancements: INT

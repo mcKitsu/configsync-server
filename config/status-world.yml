@@ -1,13 +1,7 @@
 sql: status
-tableName: extend-world-survive-0
+tableName: world
+primaryKey: uuid
 table:
-    flying: INT
-    mayfly: INT
-    motionX: REAL
-    motionY: REAL
-    motionZ: REAL
-    posX: REAL
-    posY: REAL
-    posZ: REAL
-    rotationHorizontal: REAL
-    rotationVertical: REAL
+    uuid: CHAR(36) NOT NULL
+    writeTime: INT NOT NULL
+    extend-world-survive-0: TEXT
