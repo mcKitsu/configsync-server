@@ -1,7 +1,0 @@
-sql: status
-tableName: world
-primaryKey: uuid
-table:
-    uuid: CHAR(36) NOT NULL
-    writeTime: INT NOT NULL
-    extend-world-survive-0: TEXT

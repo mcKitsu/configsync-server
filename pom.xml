@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.mckitsu.configsync.server</groupId>
+    <groupId>net.mckitsu.configsync</groupId>
     <artifactId>configsync-server</artifactId>
     <version>0.1.0</version>
     <url>http://www.kitsu.net</url>
@@ -97,6 +97,16 @@
             <groupId>net.mckitsu.lib</groupId>
             <artifactId>lib-util</artifactId>
             <version>[0.1,)</version>
+        </dependency>
+        <dependency>
+            <groupId>net.mckitsu.lib</groupId>
+            <artifactId>lib-sqlite</artifactId>
+            <version>[0.1,)</version>
+        </dependency>
+        <dependency>
+            <groupId>net.mckitsu.configsync</groupId>
+            <artifactId>configsync-protocol</artifactId>
+            <version>0.1</version>
         </dependency>
     </dependencies>
 

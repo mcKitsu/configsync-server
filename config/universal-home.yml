@@ -1,8 +1,0 @@
-sql: universal
-tableName: home
-primaryKey: uuid
-table:
-    uuid: CHAR(36) NOT NULL
-    writeTime: INT NOT NULL
-    max: INT
-    home: TEXT

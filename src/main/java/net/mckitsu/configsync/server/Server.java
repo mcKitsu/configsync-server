@@ -1,5 +1,6 @@
 package net.mckitsu.configsync.server;
 
+import net.mckitsu.configsync.server.database.Database;
 import net.mckitsu.configsync.server.loader.ResourceLoader;
 import net.mckitsu.configsync.server.network.ServiceServer;
 
@@ -19,6 +20,7 @@ public class Server implements CommandLineEvent {
     private final CommandLine commandLine = new CommandLine();
     private ServiceServer serviceServer;
     private TerminalServer remoteServer;
+    private Database database;
 
     /* **************************************************************************************
      *  Construct method
@@ -47,6 +49,13 @@ public class Server implements CommandLineEvent {
 
     @Override
     public void onFinish(Terminal terminal) {
+        database = new Database() {
+            @Override
+            protected Logger getLogger() {
+                return terminal.getLogger();
+            }
+        };
+
         serviceServer = constructServiceServer(getServiceVerifyKey(), getServiceAddress());
         try {
             terminal.getLogger().info("Start ServiceServer as IP: " + serviceServer.getLocalAddress());
