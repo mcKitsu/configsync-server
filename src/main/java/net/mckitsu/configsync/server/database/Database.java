@@ -2,15 +2,17 @@ package net.mckitsu.configsync.server.database;
 
 import net.mckitsu.configsync.protocol.ConfigSyncProtocol;
 import net.mckitsu.lib.sqlite.SQLite;
+import net.mckitsu.configsync.protocol.*;
+import net.mckitsu.lib.sqlite.SQLiteTable;
 
-import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
 public abstract class Database {
-    private final Map<String, Map<String, String>> sqlTableConfigs = ConfigSyncProtocol.getAllTables();
     private final Map<String, SQLite> sqLites = new HashMap<>();
+    private boolean isConnect = false;
+
     /* **************************************************************************************
      *  Abstract method
      */
@@ -20,11 +22,7 @@ public abstract class Database {
      *  Construct method
      */
     public Database(){
-        this.getLogger().info("Protocol version: " + net.mckitsu.configsync.protocol.ConfigSyncProtocol.getVersion());
-
-        for(Map.Entry<String, Map<String, String>> entry : sqlTableConfigs.entrySet()){
-            this.getLogger().info("Protocol add sql table : " + entry.getKey());
-        }
+        this.getLogger().info("[Database] Protocol version: " + net.mckitsu.configsync.protocol.ConfigSyncProtocol.getVersion());
     }
 
     /* **************************************************************************************
@@ -34,6 +32,50 @@ public abstract class Database {
     /* **************************************************************************************
      *  Public method
      */
+    public void connect(){
+        if(isConnect)
+            return;
+
+        for(DatabaseConfig config : ConfigSyncProtocol.getAllDatabaseConfig()){
+            String filePath = String.format("database\\%s.db", config.getSqlName());
+            SQLite sqLite = this.sqLites.get(config.getSqlName());
+            if(sqLite == null){
+
+                sqLite = new SQLite(String.format("database\\%s.db", config.getSqlName()));
+
+                if(sqLite.connect()){
+                    this.getLogger().info("[Database] connect successful " + filePath);
+                    this.sqLites.put(config.getSqlName(), sqLite);
+                }else{
+                    this.getLogger().severe("[Database] connect fail " + filePath);
+                    continue;
+                }
+            }
+
+            SQLiteTable sqLiteTable = convertToSQLiteTable(config);
+            SQLite.Status result = sqLite.createTable(sqLiteTable);
+            if(result == SQLite.Status.SUCCESS){
+                getLogger().info(String.format("[Database] add table [%s] to %s", config.getTableName(), filePath));
+            }else{
+                getLogger().info(String.format("[Database] found table [%s] from %s", config.getTableName(), filePath));
+            }
+        }
+
+        this.getLogger().info("[Database] connect");
+    }
+
+    public void close(){
+        if(!isConnect)
+            return;
+
+        for(Map.Entry<String, SQLite> entry : this.sqLites.entrySet()){
+            entry.getValue().close();
+        }
+
+        this.getLogger().info("[Database] close");
+
+        this.sqLites.clear();
+    }
 
     /* **************************************************************************************
      *  protected method
@@ -42,11 +84,12 @@ public abstract class Database {
     /* **************************************************************************************
      *  Private method
      */
-    private void initSQLiteTable(){
 
-    }
-
-    private void sqLiteConnect(){
-
+    private SQLiteTable convertToSQLiteTable(DatabaseConfig config){
+        SQLiteTable result = new SQLiteTable();
+        result.setTableName(config.getTableName());
+        result.setPrimaryKey(config.getPrimaryKey());
+        result.setTable(config.getMap());
+        return result;
     }
 }

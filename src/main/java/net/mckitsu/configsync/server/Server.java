@@ -2,8 +2,8 @@ package net.mckitsu.configsync.server;
 
 import net.mckitsu.configsync.server.database.Database;
 import net.mckitsu.configsync.server.loader.ResourceLoader;
-import net.mckitsu.configsync.server.network.ServiceServer;
 
+import net.mckitsu.configsync.server.network.ServiceServer;
 import net.mckitsu.configsync.server.network.TerminalServer;
 import net.mckitsu.configsync.server.terminal.CommandLine;
 import net.mckitsu.configsync.server.terminal.CommandLineEvent;
@@ -56,24 +56,27 @@ public class Server implements CommandLineEvent {
             }
         };
 
+        database.connect();
+
         serviceServer = constructServiceServer(getServiceVerifyKey(), getServiceAddress());
         try {
-            terminal.getLogger().info("Start ServiceServer as IP: " + serviceServer.getLocalAddress());
+            terminal.getLogger().info("[Network] Start ServiceServer as IP: " + serviceServer.getLocalAddress());
         } catch (IOException e) {
-            terminal.getLogger().info("ServiceServer start fail. " + e);
+            terminal.getLogger().info("[Network] ServiceServer start fail. " + e);
         }
 
         this.remoteServer = constructRemoteShellServer(getTerminalVerifyKey(), getTerminalAddress());
 
         try {
-            terminal.getLogger().info("Start RemoteServer as IP: " + remoteServer.getLocalAddress());
+            terminal.getLogger().info("[Network] Start RemoteServer as IP: " + remoteServer.getLocalAddress());
         } catch (IOException e) {
-            terminal.getLogger().info("RemoteServer start fail. " + e);
+            terminal.getLogger().info("[Network] RemoteServer start fail. " + e);
         }
     }
 
     @Override
     public void onStop(Terminal terminal) {
+        this.database.close();
         this.serviceServer.stop();
         this.remoteServer.stop();
     }

@@ -42,6 +42,7 @@ public class CommandRestart implements TerminalCommand {
 
     @Override
     public boolean handle(Terminal terminal, String[] args) {
+        onRestart.accept(terminal);
         return true;
     }
 

@@ -98,10 +98,16 @@ public class CommandLine extends Terminal {
 
     private void onReload(Terminal terminal){
         this.event.onLoad(terminal);
+        this.getLogger().info("Server reload!");
     }
 
     private void onRestart(Terminal terminal){
-
+        this.getLogger().info("Server restart");
+        event.onStop(this);
+        event.onStart(this);
+        event.onLoad(this);
+        event.onFinish(this);
+        this.getLogger().info("Server restart finish!");
     }
 
     private void onStop(Terminal terminal){
