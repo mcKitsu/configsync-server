@@ -1,8 +1,5 @@
 package net.mckitsu.configsync.server;
 
-
-import java.util.Map;
-
 public class Main {
     public static final String format = "%1$tF %1$tT [%4$s] %5$s%6$s%n";
 

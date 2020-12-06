@@ -13,6 +13,7 @@ public abstract class Database {
     private final Map<String, SQLite> sqLites = new HashMap<>();
     private boolean isConnect = false;
 
+
     /* **************************************************************************************
      *  Abstract method
      */
@@ -36,6 +37,7 @@ public abstract class Database {
         if(isConnect)
             return;
 
+        this.isConnect = true;
         for(DatabaseConfig config : ConfigSyncProtocol.getAllDatabaseConfig()){
             String filePath = String.format("database\\%s.db", config.getSqlName());
             SQLite sqLite = this.sqLites.get(config.getSqlName());
@@ -67,6 +69,8 @@ public abstract class Database {
     public void close(){
         if(!isConnect)
             return;
+
+        this.isConnect = false;
 
         for(Map.Entry<String, SQLite> entry : this.sqLites.entrySet()){
             entry.getValue().close();
